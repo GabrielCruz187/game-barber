@@ -1,0 +1,150 @@
+/* Estilos para a roleta */
+.roleta-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 30px;
+  }
+  
+  .roleta {
+    width: 100%;
+    padding-bottom: 100%; /* Mantém proporção 1:1 */
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+    transition: transform 3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+    background-color: #f8f9fa;
+    border: 10px solid #ffffff;
+  }
+  
+  .roleta-section {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 0;
+    left: 0;
+    transform-origin: bottom right;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .roleta-section:nth-child(1) {
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  
+  .roleta-section:nth-child(2) {
+    transform: rotate(45deg);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  
+  .roleta-section:nth-child(3) {
+    transform: rotate(90deg);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  
+  .roleta-section:nth-child(4) {
+    transform: rotate(135deg);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  
+  .roleta-section:nth-child(5) {
+    transform: rotate(180deg);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  
+  .roleta-section:nth-child(6) {
+    transform: rotate(225deg);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  
+  .roleta-section:nth-child(7) {
+    transform: rotate(270deg);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  
+  .roleta-section:nth-child(8) {
+    transform: rotate(315deg);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  
+  .roleta-content {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    transform: rotate(-45deg);
+    width: 60%;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  .roleta-icon {
+    display: block;
+    margin: 0 auto 5px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  .roleta-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    font-weight: bold;
+    color: #333;
+    font-size: 18px;
+    border: 5px solid #f0f0f0;
+  }
+  
+  .roleta-pointer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 30px;
+    background: #ffcc00;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    z-index: 20;
+  }
+  
+  .bg-section-1 {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+  .bg-section-2 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  .bg-section-3 {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  }
+  .bg-section-4 {
+    background: linear-gradient(135deg, #ffc3a0 0%, #ffafbd 100%);
+  }
+  .bg-section-5 {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  }
+  .bg-section-6 {
+    background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+  }
+  .bg-section-7 {
+    background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+  }
+  .bg-section-8 {
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  }
+  
+  

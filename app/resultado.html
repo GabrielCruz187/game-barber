@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seu Prêmio - Barbearia Premium</title>
+  <link rel="stylesheet" href="/styles/global.css">
+  <link rel="stylesheet" href="/styles/card.css">
+  <link rel="stylesheet" href="/styles/buttons.css">
+  <link rel="stylesheet" href="/styles/countdown.css">
+  <link rel="stylesheet" href="/styles/qrcode.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container flex flex-col items-center justify-center" style="min-height: 100vh;">
+    <div class="card max-w-md w-full">
+      <div class="card-header">
+        <img src="/placeholder.svg?height=128&width=128" alt="Logo da Barbearia" class="mb-4" style="width: 128px; height: 128px; margin: 0 auto;">
+        <h1 class="card-title">Barbearia Premium</h1>
+      </div>
+      
+      <div class="card-content text-center">
+        <div id="premioIcon" class="mb-4" style="margin: 0 auto; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+          <i class="fas fa-cut" style="font-size: 24px;"></i>
+        </div>
+        
+        <h2 class="text-2xl font-bold mb-2">Parabéns!</h2>
+        <p class="text-lg mb-1">Você ganhou:</p>
+        <p id="premioNome" class="text-xl font-bold mb-4"></p>
+        
+        <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+          <p class="text-sm text-yellow-800 mb-2">
+            Válido até: <span id="dataExpiracao" class="font-bold"></span>
+          </p>
+          
+          <!-- Contagem regressiva -->
+          <div class="countdown-container">
+            <div class="countdown-item">
+              <span id="countDias" class="countdown-number">30</span>
+              <span class="countdown-label">dias</span>
+            </div>
+            <div class="countdown-item">
+              <span id="countHoras" class="countdown-number">00</span>
+              <span class="countdown-label">horas</span>
+            </div>
+            <div class="countdown-item">
+              <span id="countMinutos" class="countdown-number">00</span>
+              <span class="countdown-label">min</span>
+            </div>
+            <div class="countdown-item">
+              <span id="countSegundos" class="countdown-number">00</span>
+              <span class="countdown-label">seg</span>
+            </div>
+          </div>
+        </div>
+        
+        <p class="text-sm text-gray-600 mb-6">
+          Apresente este cupom na barbearia para resgatar seu prêmio.
+          Traga um amigo e ganhe 10% de desconto adicional!
+        </p>
+        
+        <!-- QR Code para WhatsApp -->
+        <div class="qrcode-container">
+          <p class="qrcode-title">Escaneie o QR Code para contato:</p>
+          <img src="/qrcode-whatsapp.png" alt="QR Code WhatsApp" class="qrcode-image" id="qrCodeWhatsApp">
+          <p class="qrcode-subtitle">
+            Ou entre em contato pelo telefone: <br>
+            <strong>(00) 00000-0000</strong>
+          </p>
+        </div>
+        
+        <p class="text-xs text-gray-500">
+          Código: <span id="codigoPremio"></span>
+        </p>
+      </div>
+      
+      <div class="card-footer no-print">
+        <button class="btn btn-outline btn-icon" onclick="salvarPDF()">
+          <i class="fas fa-download"></i> Salvar PDF
+        </button>
+        <button class="btn btn-outline btn-icon" onclick="window.print()">
+          <i class="fas fa-print"></i> Imprimir
+        </button>
+        <a href="/" class="btn btn-primary btn-icon">
+          <i class="fas fa-home"></i> Início
+        </a>
+        <a href="#" id="btnWhatsApp" class="btn btn-whatsapp btn-icon">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Definição dos prêmios disponíveis
+      const PREMIOS = [
+        { id: 1, nome: '20% de desconto em corte de cabelo e barba', icon: 'cut', cor: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' },
+        { id: 2, nome: '30% de desconto em produto para barba', icon: 'box', cor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+        { id: 3, nome: '20% de desconto em pomada para cabelo', icon: 'spray-can', cor: 'linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)' },
+        { id: 4, nome: 'Corte grátis', icon: 'gift', cor: 'linear-gradient(135deg, #ffc3a0 0%, #ffafbd 100%)' },
+        { id: 5, nome: 'Café espresso grátis', icon: 'coffee', cor: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)' },
+        { id: 6, nome: '15% de desconto em camisetas da loja', icon: 'tshirt', cor: 'linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%)' },
+        { id: 7, nome: 'Tratamento de barba com desconto de 25%', icon: 'magic', cor: 'linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%)' },
+        { id: 8, nome: 'Kit de cuidados faciais com 10% de desconto', icon: 'brush', cor: 'linear-gradient(135deg, #f6d365 0%, #fda085 100%)' }
+      ];
+      
+      // Obter o ID do prêmio da URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const premioId = parseInt(urlParams.get('premio')) || 1;
+      
+      // Encontrar o prêmio pelo ID
+      const premio = PREMIOS.find(p => p.id === premioId) || PREMIOS[0];
+      
+      // Preencher os dados do prêmio
+      document.getElementById('premioNome').textContent = premio.nome;
+      document.getElementById('premioIcon').style.background = premio.cor;
+      document.getElementById('premioIcon').innerHTML = `<i class="fas fa-${premio.icon}" style="font-size: 24px;"></i>`;
+      
+      // Gerar código aleatório para o prêmio
+      document.getElementById('codigoPremio').textContent = Math.random().toString(36).substring(2, 10).toUpperCase();
+      
+      // Definir data de expiração (30 dias a partir de hoje)
+      const dataExp = new Date();
+      dataExp.setDate(dataExp.getDate() + 30);
+      
+      // Formatar a data de expiração
+      const options = { day: 'numeric', month: 'long', year: 'numeric' };
+      document.getElementById('dataExpiracao').textContent = dataExp.toLocaleDateString('pt-BR', options);
+      
+      // Atualizar a contagem regressiva
+      function atualizarContagem() {
+        const agora = new Date();
+        const diff = dataExp.getTime() - agora.getTime();
+        
+        if (diff <= 0) {
+          document.getElementById('countDias').textContent = '00';
+          document.getElementById('countHoras').textContent = '00';
+          document.getElementById('countMinutos').textContent = '00';
+          document.getElementById('countSegundos').textContent = '00';
+          return;
+        }
+        
+        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((diff % (1000 * 60)) / 1000);
+        
+        document.getElementById('countDias').textContent = dias.toString().padStart(2, '0');
+        document.getElementById('countHoras').textContent = horas.toString().padStart(2, '0');
+        document.getElementById('countMinutos').textContent = minutos.toString().padStart(2, '0');
+        document.getElementById('countSegundos').textContent = segundos.toString().padStart(2, '0');
+      }
+      
+      // Atualizar a contagem a cada segundo
+      atualizarContagem();
+      setInterval(atualizarContagem, 1000);
+      
+      // Configurar o QR Code do WhatsApp
+      // Na implementação real, você geraria um QR Code dinâmico
+      document.getElementById('qrCodeWhatsApp').src = '/qrcode-whatsapp.png';
+      
+      // Configurar o botão do WhatsApp
+      const telefone = '5500000000000'; // Substitua pelo telefone real da barbearia
+      const mensagem = `Olá! Ganhei um prêmio na promoção: ${premio.nome}. Gostaria de agendar para utilizá-lo.`;
+      const whatsappUrl = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+      document.getElementById('btnWhatsApp').href = whatsappUrl;
+    });
+    
+    // Função para salvar o PDF
+    function salvarPDF() {
+      // Na implementação real, você usaria uma biblioteca como jsPDF
+      alert('Funcionalidade de download do PDF será implementada aqui');
+    }
+  </script>
+</body>
+</html>
+

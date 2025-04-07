@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Barbearia Premium</title>
+  <link rel="stylesheet" href="/styles/global.css">
+  <link rel="stylesheet" href="/styles/card.css">
+  <link rel="stylesheet" href="/styles/buttons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container flex flex-col items-center justify-center" style="min-height: 100vh; background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
+    <div class="card max-w-md w-full">
+      <div class="card-header">
+        <img src="/placeholder.svg?height=128&width=128" alt="Logo da Barbearia" class="mb-4" style="width: 128px; height: 128px; margin: 0 auto;">
+        <h1 class="card-title">Barbearia Premium</h1>
+        <p class="card-description">Faça login para receber seu prêmio exclusivo</p>
+      </div>
+      
+      <div class="card-content">
+        <form id="loginForm">
+          <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-600 mb-1">Email</label>
+            <input type="email" id="email" placeholder="seu@email.com" required
+                  style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+          </div>
+          
+          <div class="mb-4">
+            <label for="phone" class="block text-sm font-medium text-gray-600 mb-1">Telefone</label>
+            <input type="tel" id="phone" placeholder="(00) 00000-0000" required
+                  style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+          </div>
+        </form>
+      </div>
+      
+      <div class="card-footer">
+        <button id="btnLogin" class="btn btn-primary w-full btn-icon">
+          <i class="fas fa-gift"></i> Receba Seu Prêmio
+        </button>
+      </div>
+    </div>
+  </div>
+
+ <script src="/js/login.js"></script>
+</body>
+</html>
+

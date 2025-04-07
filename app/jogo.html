@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Roleta da Sorte - Barbearia Premium</title>
+  <link rel="stylesheet" href="/styles/global.css">
+  <link rel="stylesheet" href="/styles/card.css">
+  <link rel="stylesheet" href="/styles/buttons.css">
+  <link rel="stylesheet" href="/styles/roleta.css">
+  <link rel="stylesheet" href="/styles/confetti.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container flex flex-col items-center justify-center" style="min-height: 100vh;">
+    <div class="text-center mb-6">
+      <h1 class="text-3xl text-white font-bold mb-2">Gire a Roleta da Sorte</h1>
+      <p class="text-white" style="opacity: 0.8;">Você tem um prêmio garantido!</p>
+    </div>
+    
+    <div class="roleta-container">
+      <div class="roleta" id="roleta">
+        <div class="roleta-section bg-section-1">
+          <div class="roleta-content">
+            <i class="fas fa-cut roleta-icon"></i>
+            <span>20% em corte</span>
+          </div>
+        </div>
+        <div class="roleta-section bg-section-2">
+          <div class="roleta-content">
+            <i class="fas fa-box roleta-icon"></i>
+            <span>30% em produtos</span>
+          </div>
+        </div>
+        <div class="roleta-section bg-section-3">
+          <div class="roleta-content">
+            <i class="fas fa-spray-can roleta-icon"></i>
+            <span>20% em pomada</span>
+          </div>
+        </div>
+        <div class="roleta-section bg-section-4">
+          <div class="roleta-content">
+            <i class="fas fa-gift roleta-icon"></i>
+            <span>Corte grátis</span>
+          </div>
+        </div>
+        <div class="roleta-section bg-section-5">
+          <div class="roleta-content">
+            <i class="fas fa-coffee roleta-icon"></i>
+            <span>Café grátis</span>
+          </div>
+        </div>
+        <div class="roleta-section bg-section-6">
+          <div class="roleta-content">
+            <i class="fas fa-tshirt roleta-icon"></i>
+            <span>15% em camisetas</span>
+          </div>
+        </div>
+        <div class="roleta-section bg-section-7">
+          <div class="roleta-content">
+            <i class="fas fa-magic roleta-icon"></i>
+            <span>25% em barba</span>
+          </div>
+        </div>
+        <div class="roleta-section bg-section-8">
+          <div class="roleta-content">
+            <i class="fas fa-brush roleta-icon"></i>
+            <span>10% em kit facial</span>
+          </div>
+        </div>
+        <div class="roleta-center">
+          GIRE!
+        </div>
+      </div>
+      <div class="roleta-pointer"></div>
+    </div>
+    
+    <button id="btnGirar" class="spin-button">
+      Girar Roleta
+    </button>
+    
+    <div id="resultadoPremio" class="card premio-card mt-4 max-w-md w-full" style="display: none;">
+      <div class="card-content text-center">
+        <h2 class="text-2xl font-bold mb-2">Parabéns!</h2>
+        <p class="text-lg">Você ganhou: <span id="premioTexto" class="font-bold"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const roleta = document.getElementById('roleta');
+      const btnGirar = document.getElementById('btnGirar');
+      const resultadoPremio = document.getElementById('resultadoPremio');
+      const premioTexto = document.getElementById('premioTexto');
+      
+      // Definição dos prêmios disponíveis
+      const PREMIOS = [
+        { id: 1, nome: '20% de desconto em corte de cabelo e barba', probabilidade: 25 },
+        { id: 2, nome: '30% de desconto em produto para barba', probabilidade: 20 },
+        { id: 3, nome: '20% de desconto em pomada para cabelo', probabilidade: 15 },
+        { id: 4, nome: 'Corte grátis', probabilidade: 5 },
+        { id: 5, nome: 'Café espresso grátis', probabilidade: 10 },
+        { id: 6, nome: '15% de desconto em camisetas da loja', probabilidade: 10 },
+        { id: 7, nome: 'Tratamento de barba com desconto de 25%', probabilidade: 10 },
+        { id: 8, nome: 'Kit de cuidados faciais com 10% de desconto', probabilidade: 5 }
+      ];
+      
+      let girandoRoleta = false;
+      
+      // Função para criar confetes quando ganhar o prêmio
+      function criarConfetes() {
+        const confetesContainer = document.createElement('div');
+        confetesContainer.style.position = 'fixed';
+        confetesContainer.style.top = '0';
+        confetesContainer.style.left = '0';
+        confetesContainer.style.width = '100%';
+        confetesContainer.style.height = '100%';
+        confetesContainer.style.pointerEvents = 'none';
+        confetesContainer.style.zIndex = '1000';
+        document.body.appendChild(confetesContainer);
+
+        const cores = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+        
+        for (let i = 0; i < 100; i++) {
+          const confete = document.createElement('div');
+          confete.className = 'confetti';
+          confete.style.left = Math.random() * 100 + 'vw';
+          confete.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+          confete.style.width = Math.random() * 10 + 5 + 'px';
+          confete.style.height = Math.random() * 10 + 5 + 'px';
+          confete.style.animationDelay = Math.random() * 3 + 's';
+          confetesContainer.appendChild(confete);
+        }
+
+        setTimeout(() => {
+          document.body.removeChild(confetesContainer);
+        }, 5000);
+      }
+      
+      // Função para sortear um prêmio baseado nas probabilidades
+      function sortearPremio() {
+        if (girandoRoleta) return;
+        
+        girandoRoleta = true;
+        btnGirar.disabled = true;
+        btnGirar.textContent = 'Girando...';
+        
+        // Sortear o prêmio baseado nas probabilidades
+        const random = Math.random() * 100;
+        let acumulado = 0;
+        let premioIndex = 0;
+        
+        for (let i = 0; i < PREMIOS.length; i++) {
+          acumulado += PREMIOS[i].probabilidade;
+          if (random <= acumulado) {
+            premioIndex = i;
+            break;
+          }
+        }
+        
+        // Calcular o ângulo para o prêmio selecionado (cada seção tem 45 graus)
+        // Adicionar 5 voltas completas (1800 graus) + metade do ângulo da seção (22.5 graus)
+        // + o ângulo para o prêmio específico
+        const anguloFinal = 1800 + 22.5 + (premioIndex * 45);
+        
+        // Girar a roleta
+        roleta.style.transform = `rotate(${anguloFinal}deg)`;
+        
+        // Mostrar o resultado após a animação
+        setTimeout(() => {
+          premioTexto.textContent = PREMIOS[premioIndex].nome;
+          resultadoPremio.style.display = 'block';
+          criarConfetes();
+          
+          // Redirecionar para a página de resultado após 3 segundos
+          setTimeout(() => {
+            window.location.href = `/app/resultado.html?premio=${PREMIOS[premioIndex].id}`;
+          }, 3000);
+          
+        }, 3000); // Tempo da animação da roleta
+      }
+      
+      // Adicionar evento de clique ao botão
+      btnGirar.addEventListener('click', sortearPremio);
+    });
+  </script>
+</body>
+</html>
+

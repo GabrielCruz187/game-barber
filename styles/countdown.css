@@ -1,0 +1,32 @@
+/* Estilos para o contador regressivo */
+.countdown-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+  }
+  
+  .countdown-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    border-radius: 8px;
+    padding: 8px;
+    min-width: 60px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .countdown-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4338ca;
+  }
+  
+  .countdown-label {
+    font-size: 0.7rem;
+    color: #6b7280;
+    text-transform: uppercase;
+  }
+  
+  
