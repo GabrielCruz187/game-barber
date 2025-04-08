@@ -1,27 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const btnLogin = document.getElementById('btnLogin');
     const loginForm = document.getElementById('loginForm');
+    const btnLogin = document.getElementById('btnLogin');
     
     btnLogin.addEventListener('click', async function(e) {
       e.preventDefault();
       
       // Validar o formulário
       const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
+      const senha = document.getElementById('senha').value;
       
-      if (!email || !phone) {
+      if (!email || !senha) {
         alert('Por favor, preencha todos os campos.');
         return;
       }
       
       try {
         // Fazer login na API
-        const response = await fetch('http://localhost:5000/api/auth/login-simple', {
+        const response = await fetch('http://localhost:5000/api/barbearias/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ email, phone })
+          body: JSON.stringify({ email, senha })
         });
         
         const data = await response.json();
@@ -31,16 +31,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Salvar token no localStorage
-        localStorage.setItem('userToken', data.token);
-        localStorage.setItem('userData', JSON.stringify({
+        localStorage.setItem('barbeariaToken', data.token);
+        localStorage.setItem('barbeariaData', JSON.stringify({
           id: data._id,
-          name: data.name,
+          nome: data.nome,
           email: data.email,
-          phone: data.phone
+          telefone: data.telefone
         }));
         
-        // Redirecionar para a página do jogo
-        window.location.href = '/app/jogo.html';
+        // Redirecionar para o dashboard
+        window.location.href = '/app/admin/dashboard.html';
       } catch (error) {
         alert(error.message);
       }

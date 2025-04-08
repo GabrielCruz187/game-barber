@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
       
       try {
         // Fazer requisição para a API
-        const response = await fetch('/api/premios/sortear', {
+        const response = await fetch('http://localhost:5000/api/premios/todos', {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Barbearia - Sistema de Promoções</title>
+  <link rel="stylesheet" href="/styles/global.css">
+  <link rel="stylesheet" href="/styles/card.css">
+  <link rel="stylesheet" href="/styles/buttons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container flex flex-col items-center justify-center" style="min-height: 100vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+    <div class="card max-w-md w-full">
+      <div class="card-header">
+        <div class="mx-auto mb-4 bg-gradient-to-br from-purple-600 to-blue-500 p-3 rounded-full inline-flex">
+          <i class="fas fa-cut" style="color: white; font-size: 24px;"></i>
+        </div>
+        <h1 class="card-title">Cadastro de Barbearia</h1>
+        <p class="card-description">Crie sua conta para oferecer promoções aos seus clientes</p>
+      </div>
+      
+      <div class="card-content">
+        <form id="registerForm">
+          <div class="mb-4">
+            <label for="nome" class="block text-sm font-medium text-gray-600 mb-1">Nome da Barbearia</label>
+            <input type="text" id="nome" placeholder="Barbearia Premium" required
+                  style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+          </div>
+          
+          <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-600 mb-1">Email</label>
+            <input type="email" id="email" placeholder="contato@barbearia.com" required
+                  style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+          </div>
+          
+          <div class="mb-4">
+            <label for="telefone" class="block text-sm font-medium text-gray-600 mb-1">Telefone</label>
+            <input type="tel" id="telefone" placeholder="(00) 00000-0000" required
+                  style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+          </div>
+          
+          <div class="mb-4">
+            <label for="senha" class="block text-sm font-medium text-gray-600 mb-1">Senha</label>
+            <input type="password" id="senha" placeholder="••••••••" required
+                  style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+          </div>
+          
+          <div class="mb-4">
+            <label for="confirmarSenha" class="block text-sm font-medium text-gray-600 mb-1">Confirmar Senha</label>
+            <input type="password" id="confirmarSenha" placeholder="••••••••" required
+                  style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+          </div>
+          
+          <h3 class="text-lg font-medium mb-2 mt-6">Endereço</h3>
+          
+          <div class="mb-4">
+            <label for="rua" class="block text-sm font-medium text-gray-600 mb-1">Rua</label>
+            <input type="text" id="rua" placeholder="Rua das Barbearias" required
+                  style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="numero" class="block text-sm font-medium text-gray-600 mb-1">Número</label>
+              <input type="text" id="numero" placeholder="123" required
+                    style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+            </div>
+            <div>
+              <label for="bairro" class="block text-sm font-medium text-gray-600 mb-1">Bairro</label>
+              <input type="text" id="bairro" placeholder="Centro" required
+                    style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label for="cidade" class="block text-sm font-medium text-gray-600 mb-1">Cidade</label>
+              <input type="text" id="cidade" placeholder="São Paulo" required
+                    style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+            </div>
+            <div>
+              <label for="estado" class="block text-sm font-medium text-gray-600 mb-1">Estado</label>
+              <input type="text" id="estado" placeholder="SP" required
+                    style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+            </div>
+          </div>
+          
+          <div class="mb-4">
+            <label for="cep" class="block text-sm font-medium text-gray-600 mb-1">CEP</label>
+            <input type="text" id="cep" placeholder="00000-000" required
+                  style="width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 6px; outline: none;">
+          </div>
+        </form>
+      </div>
+      
+      <div class="card-footer">
+        <button id="btnRegister" class="btn btn-primary w-full btn-icon">
+          <i class="fas fa-user-plus"></i> Cadastrar e Prosseguir para Pagamento
+        </button>
+        <p class="text-center mt-4 text-sm">
+          Já tem uma conta? <a href="/app/admin/login.html" class="text-blue-600 hover:underline">Faça login</a>
+        </p>
+        <p class="text-center mt-2 text-xs text-gray-500">
+          Ao se cadastrar, você concorda em pagar R$150,00 por mês pelo uso do sistema.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/admin/register.js"></script>
+</body>
+</html>

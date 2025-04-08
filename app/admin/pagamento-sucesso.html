@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagamento Confirmado - Sistema de Promoções</title>
+  <link rel="stylesheet" href="/styles/global.css">
+  <link rel="stylesheet" href="/styles/card.css">
+  <link rel="stylesheet" href="/styles/buttons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container flex flex-col items-center justify-center" style="min-height: 100vh; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+    <div class="card max-w-md w-full">
+      <div class="card-header">
+        <div class="mx-auto mb-4 bg-gradient-to-br from-green-500 to-teal-500 p-3 rounded-full inline-flex">
+          <i class="fas fa-check" style="color: white; font-size: 24px;"></i>
+        </div>
+        <h1 class="card-title">Pagamento Confirmado!</h1>
+        <p class="card-description">Sua assinatura foi ativada com sucesso</p>
+      </div>
+      
+      <div class="card-content">
+        <div class="text-center mb-6">
+          <div class="bg-green-50 text-green-700 p-4 rounded-lg mb-4">
+            <p class="font-bold">Assinatura Ativa</p>
+            <p class="text-sm">Sua assinatura está ativa até <span id="dataExpiracao">30 dias a partir de hoje</span></p>
+          </div>
+          
+          <p class="text-gray-600 mb-4">
+            Agora você tem acesso completo ao sistema de promoções para sua barbearia. Configure seus prêmios, personalize a aparência e comece a atrair mais clientes!
+          </p>
+        </div>
+      </div>
+      
+      <div class="card-footer">
+        <a href="/app/admin/dashboard.html" class="btn btn-primary w-full btn-icon">
+          <i class="fas fa-tachometer-alt"></i> Ir para o Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Calcular data de expiração (30 dias a partir de hoje)
+      const dataExp = new Date();
+      dataExp.setDate(dataExp.getDate() + 30);
+      
+      // Formatar a data
+      const options = { day: 'numeric', month: 'long', year: 'numeric' };
+      document.getElementById('dataExpiracao').textContent = dataExp.toLocaleDateString('pt-BR', options);
+      
+      // Verificar se o usuário está logado
+      const token = localStorage.getItem('barbeariaToken');
+      if (!token) {
+        window.location.href = '/app/admin/login.html';
+      }
+    });
+  </script>
+</body>
+</html>
